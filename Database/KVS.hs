@@ -15,6 +15,8 @@ import qualified Data.Conduit.List as C (map, mapM_)
 
 import qualified Data.Aeson as AE (ToJSON, encode, FromJSON, decode)
 
+
+
 {-
 -}
 class KVS c s k v where
@@ -25,11 +27,11 @@ class KVS c s k v where
   delete :: (Eq k) => c s k v -> k -> s ()
   accept :: (Eq k, Functor s, Monad s) => c s k v -> k -> (Maybe v -> s b) -> s b
   accept c k f = lookup c k >>= f
+  erase :: (Eq k, Monad s) => c s k v -> s ()
+  erase x = elemsWithKey x $$ C.mapM_ (delete x . fst)
   elems :: (Eq k, Monad s) => c s k v -> Source s v
   elems c = elemsWithKey c $= C.map snd
   elemsWithKey :: (Eq k, Monad s) => c s k v -> Source s (k,v)
-  erase :: (Eq k, Monad s) => c s k v -> s ()
-  erase x = elemsWithKey x $$ C.mapM_ (delete x . fst)
 
 
 {-
