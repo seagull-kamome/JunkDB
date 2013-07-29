@@ -32,6 +32,8 @@ class KVS c s k v where
   elems :: (Eq k, Monad s) => c s k v -> Source s v
   elems c = elemsWithKey c $= C.map snd
   elemsWithKey :: (Eq k, Monad s) => c s k v -> Source s (k,v)
+  keys :: (Eq k, Monad s) => c s k v -> Source s k
+  keys c = elemsWithKey c $= C.map fst
 
 
 {-
