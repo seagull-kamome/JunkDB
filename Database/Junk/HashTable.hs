@@ -1,5 +1,5 @@
 {-# LANGUAGE TypeFamilies, RankNTypes,TypeSynonymInstances, MultiParamTypeClasses,FlexibleInstances #-}
-module Database.KVS.Junk.HashTable (HT (..)) where
+module Database.Junk.HashTable (HT (..)) where
 
 import Control.Monad.ST.Safe
 import qualified Data.Hashable as HS (Hashable)

@@ -1,5 +1,5 @@
 {-# LANGUAGE TypeFamilies, RankNTypes,TypeSynonymInstances, MultiParamTypeClasses,FlexibleInstances #-}
-module Database.KVS.Junk.Memcached (Memcache (..)) where
+module Database.Junk.Memcached (Memcache (..)) where
 
 import Control.Monad (void)
 import qualified Network.Memcache.Protocol as MC
