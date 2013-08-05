@@ -16,6 +16,8 @@ local.properties
 .settings/
 .loadpath
 
+cabal-dev/
+
 # External tool builders
 .externalToolBuilders/
 

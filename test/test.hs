@@ -27,6 +27,7 @@ main = do
       b <- doesFileExist "./test/test.db"
       when b $ removeFile "./test/test.db"
     withNewDB "./test/test.db" 0 0o666 (lift . hspec . describe "GDBM" . spec)
+  return ()
 
 spec :: (IsString k, IsString v, Eq k, Eq v, Show k, Show v, KVS a IO k v) => a -> Spec
 spec c = do
