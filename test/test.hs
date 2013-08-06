@@ -16,6 +16,7 @@ import Database.KVS
 import Database.Junk.HashTable
 import Database.Junk.FileSystem
 import Database.Junk.GDBM
+import Database.Junk.Memcached
 
 main = do
   (HT.new :: IO (HT.BasicHashTable Text Text)) 
