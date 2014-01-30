@@ -4,7 +4,7 @@ module Database.Junk.FileSystem (
   ) where
 
 import Control.Monad.Trans (lift)
-import qualified Data.ByteString.Lazy as LBS
+import qualified Data.ByteString as BS
 import System.FilePath
 import System.Directory
 import Data.Conduit (yield, ($=))
@@ -17,17 +17,17 @@ newtype FileSystemKVS
     fsBasePath :: FilePath
     }
 
-instance KVS (FileSystemKVS) IO FilePath LBS.ByteString where
-  insert (FileSystemKVS dir) k v = LBS.writeFile (dir </> k) v
-  lookup (FileSystemKVS dir) k = do
+instance KVS (FileSystemKVS) IO FilePath BS.ByteString where
+  insert (FileSystemKVS dir) k v = BS.writeFile (dir </> k) v
+  accept (FileSystemKVS dir) k f g = do
     b <- doesFileExist (dir </> k)
     if b 
-      then return Nothing
-      else LBS.readFile (dir </> k) >>= return . Just
-  delete (FileSystemKVS dir) k = removeFile (dir </> k)
+      then f
+      else BS.readFile (dir </> k) >>= g
+  delete (FileSystemKVS dir) k = removeFile (dir </> k) >> return (Just True)
   elemsWithKey c@(FileSystemKVS dir) = 
     keys c $= C.mapM (\x -> do
-                         y <- lift $ LBS.readFile (dir </> x)
+                         y <- lift $ BS.readFile (dir </> x)
                          return (x,y))
   keys (FileSystemKVS dir) =
     yield dir 

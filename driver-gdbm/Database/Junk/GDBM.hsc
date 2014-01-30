@@ -60,16 +60,16 @@ instance KVS GDBM IO BS.ByteString BS.ByteString where
     BS.unsafeUseAsCStringLen k $ \(kptr,klen) -> 
     BS.unsafeUseAsCStringLen v $ \(vptr,vlen) -> 
     void $ gdbm_store dbf klen kptr vlen vptr (#const GDBM_REPLACE)
-  lookup (GDBM dbf) k = 
+  accept (GDBM dbf) k f g = 
     BS.unsafeUseAsCStringLen k $ \(kptr,klen) ->
     alloca $ \vlen -> do
       vptr <- gdbm_fetch dbf klen kptr vlen
       if vptr == nullPtr 
-        then return Nothing
+        then f
         else do vlen' <- peek vlen
-                Just <$> BS.unsafePackCStringFinalizer (castPtr vptr) vlen' (free vptr)
+                BS.unsafePackCStringFinalizer (castPtr vptr) vlen' (free vptr) >>= g
   delete (GDBM dbf) k =
-    BS.unsafeUseAsCStringLen k $ \(kptr,klen) -> void $ gdbm_delete dbf klen kptr
+    BS.unsafeUseAsCStringLen k $ \(kptr,klen) -> gdbm_delete dbf klen kptr >>= return . Just . (== 0)
   keys (GDBM dbf) = do
     (klen, kptr) <- lift $ lift $ alloca $ \klen -> do
       kptr <- gdbm_firstkey dbf klen

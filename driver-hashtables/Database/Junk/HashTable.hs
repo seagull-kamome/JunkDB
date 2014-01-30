@@ -14,7 +14,7 @@ newtype HT h k v = HT { unHT :: (H.IOHashTable h k v) }
 
 instance (Eq k, H.HashTable h, HS.Hashable k) => KVS (HT h k v) IO k v where
   insert = H.insert . unHT
-  lookup = H.lookup . unHT
-  delete = H.delete . unHT
+  accept c k f g = H.lookup (unHT c) k >>= maybe f g
+  delete (HT ht) k = H.delete ht k >> return Nothing
   elemsWithKey (HT c) = yield c $= C.concatMapM (lift . H.toList)
 
