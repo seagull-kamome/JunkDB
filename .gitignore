@@ -17,6 +17,7 @@ local.properties
 .loadpath
 
 cabal-dev/
+.cabal-sandbox/
 
 # External tool builders
 .externalToolBuilders/
