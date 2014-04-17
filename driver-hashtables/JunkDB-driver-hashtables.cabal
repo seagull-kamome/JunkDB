@@ -30,19 +30,19 @@ library
                        hashtables ==1.1.*,
                        resourcet ==0.4.*
 
-test-suite spec
-  type:                exitcode-stdio-1.0
-  ghc-options:         -Wall -lgdbm
-  hs-source-dirs:      test/
-  main-is:             test.hs
-  build-depends:       base,
-                       mtl ==2.1.*,
-                       directory ==1.2.*,
-                       text,
-                       hspec,
-                       JunkDB,
-                       hashable ==1.2.*,
-                       hashtables ==1.1.*,
-                       resourcet ==0.4.*,
-                       conduit ==1.0.*,
-                       HUnit ==1.2.*
+-- test-suite spec
+--  type:                exitcode-stdio-1.0
+--  ghc-options:         -Wall -lgdbm
+--  hs-source-dirs:      test/
+--  main-is:             test.hs
+--  build-depends:       base,
+--                       mtl ==2.1.*,
+--                       directory ==1.2.*,
+--                       text,
+--                       hspec,
+--                       JunkDB,
+--                       hashable ==1.2.*,
+--                       hashtables ==1.1.*,
+--                       resourcet ==0.4.*,
+--                       conduit ==1.0.*,
+--                       HUnit ==1.2.*
