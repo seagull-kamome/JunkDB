@@ -70,6 +70,8 @@ instance KVS GDBM IO BS.ByteString BS.ByteString where
                 BS.unsafePackCStringFinalizer (castPtr vptr) vlen' (free vptr) >>= g
   delete (GDBM dbf) k =
     BS.unsafeUseAsCStringLen k $ \(kptr,klen) -> gdbm_delete dbf klen kptr >>= return . Just . (== 0)
+
+instance EnumeratableKVS GDBM IO BS.ByteString BS.ByteString where
   keys (GDBM dbf) = do
     (klen, kptr) <- lift $ lift $ alloca $ \klen -> do
       kptr <- gdbm_firstkey dbf klen

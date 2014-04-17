@@ -32,4 +32,3 @@ instance KVS Memcached IO BS.ByteString BS.ByteString where
     mapM_ (BS.hPut mcdServer) ["delete ", k, " 0"]
     hFlush mcdServer
     BS.hGetLine mcdServer >>= return . Just . (== "DELETED\r")
-  elemsWithKey = undefined

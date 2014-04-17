@@ -17,14 +17,16 @@ newtype FileSystemKVS
     fsBasePath :: FilePath
     }
 
-instance KVS (FileSystemKVS) IO FilePath BS.ByteString where
-  insert (FileSystemKVS dir) k v = BS.writeFile (dir </> k) v
+instance KVS FileSystemKVS IO FilePath BS.ByteString where
+  insert (FileSystemKVS dir) k = BS.writeFile (dir </> k)
   accept (FileSystemKVS dir) k f g = do
     b <- doesFileExist (dir </> k)
     if b 
       then f
       else BS.readFile (dir </> k) >>= g
   delete (FileSystemKVS dir) k = removeFile (dir </> k) >> return (Just True)
+
+instance EnumeratableKVS FileSystemKVS IO FilePath BS.ByteString where
   elemsWithKey c@(FileSystemKVS dir) = 
     keys c $= C.mapM (\x -> do
                          y <- lift $ BS.readFile (dir </> x)

@@ -15,6 +15,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
+*.flymake_hs
 
 cabal-dev/
 .cabal-sandbox/
