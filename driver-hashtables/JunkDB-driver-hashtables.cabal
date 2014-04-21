@@ -2,7 +2,7 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                JunkDB-driver-hashtables
-version:             0.1.0.0
+version:             0.1.1.0
 -- synopsis:            
 description:         Generic KVS API
 license:             BSD3
@@ -22,13 +22,13 @@ library
   exposed-modules:     Database.Junk.HashTable
   ghc-options:         -Wall
   build-depends:       base ==4.6.*,
-                       JunkDB ==0.1.*,
-                       mtl ==2.1.*,
-                       bytestring ==0.10.*,
-                       conduit ==1.0.*,
-                       hashable >=1.1.2.0,
-                       hashtables ==1.1.*,
-                       resourcet ==0.4.*
+                       JunkDB ==0.1.1.0,
+                       mtl >=2.1,
+                       bytestring >=0.10,
+                       conduit >=1.0,
+                       hashable >=1.1.2,
+                       hashtables >=1.1,
+                       resourcet >=0.4
 
 -- test-suite spec
 --  type:                exitcode-stdio-1.0
